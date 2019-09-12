@@ -1,0 +1,12 @@
+.env*
+.DS_Store
+*.pyc
+
+/node_modules
+/build
+
+.vscode
+
+*.log
+
+env/
