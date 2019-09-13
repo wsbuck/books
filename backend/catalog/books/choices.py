@@ -18,7 +18,15 @@ GENRE_CHOICES = (
     ('travel', 'Travel'),
 )
 
-TYPE_CHOICES = (
+CATEGORY_CHOICES = (
     ('fiction', 'Fiction'),
     ('non-fiction', 'Non-fiction')
+)
+
+STAR_CHOICES = (
+    ('1', '⭐️'),
+    ('2', '⭐️⭐️️️'),
+    ('3', '⭐️⭐️⭐️'),
+    ('4', '⭐️⭐️⭐️⭐️'),
+    ('5', '⭐️⭐️⭐️⭐️⭐️'),
 )
