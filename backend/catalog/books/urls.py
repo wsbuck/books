@@ -4,6 +4,11 @@ from . import views
 
 urlpatterns = [
     path(
+        'add/book/',
+        views.create_book,
+        name='book-create'
+    ),
+    path(
         'books/',
         views.BookList.as_view(),
         name='book-list'
@@ -23,4 +28,14 @@ urlpatterns = [
         views.AuthorDetail.as_view(),
         name='author-detail'
     ),
+    path(
+        'genres/',
+        views.GenreList.as_view(),
+        name='genre-list'
+    ),
+    path(
+        'languages/',
+        views.LanguageList.as_view(),
+        name='language-list'
+    )
 ]

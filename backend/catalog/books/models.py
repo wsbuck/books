@@ -25,6 +25,9 @@ class Genre(models.Model):
     Model representing a book genre
     """
     name = models.CharField(max_length=100, unique=True)
+    category = models.CharField(choices=CATEGORY_CHOICES,
+                               default='fiction',
+                               max_length=100, unique=True)
 
     def __str__(self):
         return self.name
@@ -47,8 +50,8 @@ class Book(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     language = models.CharField(max_length=50)
-    category = models.CharField(choices=CATEGORY_CHOICES, default='fiction',
-                                max_length=50)
+    # category = models.CharField(choices=CATEGORY_CHOICES, default='fiction',
+    #                             max_length=50)
     # genre = models.CharField(choices=GENRE_CHOICES, default='fantasy',
     #                          max_length=50)
     genre = models.ForeignKey(Genre, related_name='books',
@@ -60,6 +63,7 @@ class Book(models.Model):
                                     blank=False, null=True)
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True)
+    publication_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return "{} ({}) by {}".format(

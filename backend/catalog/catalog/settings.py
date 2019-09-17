@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     # 3rd party apps
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 ]
 
@@ -148,3 +149,7 @@ REST_FRAMEWORK = {
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.User'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# SITE_ID = 1

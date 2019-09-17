@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Book, Author, Review
+from .models import Book, Author, Review, Genre, Language
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,3 +25,13 @@ class ReviewSerializer(serializers.ModelSerializer):
             'user', 'content', 'date_published', 'star_rating',
             'book',
         ]
+
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = ['name']
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ['name']
