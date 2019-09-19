@@ -29,11 +29,19 @@ class AuthorSerializerSimple(serializers.ModelSerializer):
         model = Author
         fields = ['pk', 'first_name', 'last_name']
 
-
 class BookSerializer(serializers.ModelSerializer):
-    # language = LanguageSerializer()
+    language = LanguageSerializer()
     genre = GenreSerializer()
     author = AuthorSerializer()
+
+    class Meta:
+        model = Book
+        fields = [
+            'pk', 'title', 'description', 'language',
+            'genre', 'author', 'isbn', 'cover_image',
+        ]
+
+class BookCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book

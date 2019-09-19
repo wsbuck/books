@@ -8,7 +8,8 @@ from rest_framework.reverse import reverse
 from .models import Book, Author, Review, Genre, Language
 from .serializers import (
     BookSerializer, AuthorSerializer, ReviewSerializer,
-    GenreSerializer, LanguageSerializer, AuthorSerializerSimple
+    GenreSerializer, LanguageSerializer, AuthorSerializerSimple,
+    BookCreateSerializer
 )
 
 @api_view(['GET', 'POST'])
@@ -23,7 +24,7 @@ def create_book(request):
             'authors': authors.data,
         })
     elif request.method == 'POST':
-        serializer = BookSerializer(data=request.data)
+        serializer = BookCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(

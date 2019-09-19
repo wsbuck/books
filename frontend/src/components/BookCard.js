@@ -11,12 +11,13 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // padding: theme.spacing(3, 2),
-    margin: theme.spacing(1, 1),
+    // margin: theme.spacing(1, 0),
+    padding: theme.spacing(1),
   },
   card: {
     // minWidth: 300,
-    // maxWidth: 600,
+    // maxWidth: 100,
+    minHeight: 180,
     display: 'flex',
     justifyContent: 'space-between',
   },
@@ -32,16 +33,6 @@ const useStyles = makeStyles(theme => ({
   pos: {
     marginBottom: 12,
   },
-
-  bookImg: {
-    border: 'solid',
-  },
-  textContent: {
-    border: 'solid'
-  },
-
-
-
 }));
 
 
@@ -85,7 +76,7 @@ export default function BookCard(props) {
   const { book } = props;
 
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} sm={6} className={classes.root}>
       <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>

@@ -16,9 +16,12 @@ const useStyles = makeStyles(theme => ({
     // margin: theme.spacing(3, 2),
   },
   bookGrid: {
-    marginTop: theme.spacing(3),
-    margin: theme.spacing(1),
+    // marginTop: theme.spacing(3),
+    // margin: theme.spacing(1),
   },
+  book: {
+
+  }
 }));
 
 export default function Home(props) {
@@ -37,10 +40,10 @@ export default function Home(props) {
 
   return (
     <div className={classes.root}>
-      <Grid className={classes.bookGrid}>
+      <Grid className={classes.bookGrid} container spacing={0}>
         {
           books.map(book => (
-            <BookCard book={book} key={book.pk} />
+              <BookCard book={book} key={book.pk} />
           ))
         }
       </Grid>

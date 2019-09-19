@@ -37,6 +37,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: '10px',
     textAlign: 'left',
   },
+  attachment: {
+    marginTop: '20px',
+    // color: 'primary',
+  }
 }));
 
 export default function AuthorForm(props) {
@@ -44,12 +48,14 @@ export default function AuthorForm(props) {
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [dateBirth, setDateBirth] = useState();
-  const [dateDeath, setDateDeath] = useState();
+  const [dateBirth, setDateBirth] = useState('1990-12-01');
+  const [dateDeath, setDateDeath] = useState('2019-09-01');
   const [headshotImg, setHeadshotImg] = useState();
+  const [headshotImgName, setHeadshotImgName] = useState('');
 
   function handleImage(event) {
     setHeadshotImg(event.target.files[0]);
+    setHeadshotImgName(event.target.files[0].name);
   }
 
   function handleImageUpload() {
@@ -72,7 +78,6 @@ export default function AuthorForm(props) {
     }
 
     const data = await createAuthor(formData);
-    console.log(data);
     if (data !== undefined) {
       setFirstName('');
       setLastName('');
@@ -83,7 +88,7 @@ export default function AuthorForm(props) {
       const newAuthor = {
         first_name: firstName,
         last_name: lastName,
-        pk: data.pk
+        pk: data
       };
 
       props.addAuthor(newAuthor);
@@ -168,7 +173,7 @@ export default function AuthorForm(props) {
                   onChange={e => setDateDeath(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={10} sm={6}>
+              <Grid item xs={6} sm={6}>
                 <input
                   type="file"
                   id="authorHeadshot"
@@ -176,7 +181,7 @@ export default function AuthorForm(props) {
                   className={classes.imgInput}
                 />
                 <Button
-                  id="authorHeadshot"
+                  id="authorHeadshotButton"
                   onClick={handleImageUpload}
                   className={classes.button}
                   color="secondary"
@@ -186,15 +191,25 @@ export default function AuthorForm(props) {
                   Upload Image
                 </Button>
               </Grid>
-              <Grid item xs={1}>
-                <Checkbox
-                  checked={headshotImg ? true : false}
-                  className={classes.checkbox}
-                />
+              <Grid item xs={6}>
+                {
+                  headshotImg
+                  ? (
+                    <div className={classes.attachment}>
+                      <i className="material-icons">
+                        attach_file
+                      </i>
+                      {headshotImgName}
+                    </div>
+                  )
+                  : ""
+                }
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
-                  type="submit"
+                  // onSubmit={e => handleSubmit(e)}
+                  onClick={e => handleSubmit(e)}
+                  // type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"

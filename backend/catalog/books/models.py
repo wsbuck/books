@@ -53,9 +53,10 @@ class Book(models.Model):
                               on_delete=models.CASCADE)
     author = models.ForeignKey(Author, related_name='books',
                                on_delete=models.CASCADE)
-    isbn = models.CharField('ISBN', max_length=13)
+    isbn = models.CharField('ISBN', max_length=13, null=True)
     cover_image = models.ImageField(upload_to='book_covers',
-                                    blank=False, null=True)
+                                    blank=False, null=True,
+                                    default='book_covers/bookDefault.png')
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True)
     publication_date = models.DateField(null=True, blank=True)

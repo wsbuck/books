@@ -116,7 +116,7 @@ export default function GenreForm(props) {
                     <MenuItem value="fiction">
                       Fiction
                   </MenuItem>
-                    <MenuItem value="nonfiction">
+                    <MenuItem value="non-fiction">
                       Non-Fiction
                   </MenuItem>
                   </Select>
@@ -124,7 +124,7 @@ export default function GenreForm(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
-                  type="submit"
+                  onClick={e => handleSubmit(e)}
                   fullWidth
                   variant="contained"
                   color="primary"

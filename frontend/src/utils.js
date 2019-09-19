@@ -137,6 +137,27 @@ function createGenre(data) {
   });
 }
 
+function createBook(formData) {
+  return new Promise((resolve, reject) => {
+    const url = 'http://localhost:8000/api/v1/add/book/';
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json();
+        } else {
+          resolve(false);
+        }
+      })
+      .then((data) => {
+        resolve(true);
+      })
+      .catch((e) => console.error(e));
+  });
+}
+
 function fetchAddBookData() {
   return new Promise((resolve, reject) => {
     const url = 'http://localhost:8000/api/v1/add/book/';
@@ -169,4 +190,5 @@ export {
   createAuthor,
   fetchAddBookData,
   createGenre,
+  createBook,
 };
