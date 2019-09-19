@@ -3,8 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
-import Login from './components/Login';
-import Signup from './components/Signup';
+
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import AddBook from './pages/AddBook';
 
 import './assets/styles/App.css';
 
@@ -28,9 +31,10 @@ function App() {
     <div className="App">
       <NavBar loggedIn={loggedIn} logout={logout} />
       <Switch>
-        {/* <Route path='/' component={Home} /> */}
-        <Route path='/login' component={Login} />
-        <Route path='/signup' component={Signup} />
+        <Route exact path='/' component={Home} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={Signup} />
+        <Route exact path='/add/book' component={AddBook} />
       </Switch>
     </div>
   );

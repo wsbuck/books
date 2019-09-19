@@ -10,6 +10,10 @@ import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useAuth } from '../components/auth-context';
+
+import { signupUser } from '../utils';
+
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.spacing(8),
@@ -40,50 +44,43 @@ export default function Signup(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-
   const [passwordError, setPasswordError] = useState(false);
 
-  function handleSignup(e) {
+  const [auth, setAuth] = useAuth();
+
+  async function handleSignup(e) {
     e.preventDefault();
-    const url = 'http://localhost:8000/api/v1/users/create/';
+    const userData = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    };
+    const status = await signupUser(userData);
+    if (status) {
+      setAuth({type: 'login'});
+    } else {
+      alertError();
+    }
+  }
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        clearInputs();
-        localStorage.setItem('authtoken', data.token);
-        props.history.push('/');
-      })
-      .catch((e) => console.error(e));
-
+  function alertError() {
+    console.log('something went wrong');
   }
 
   useEffect(() => {
     setPasswordError(!checkPasswords());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password2])
+  
+  useEffect(() => {
+    if (auth.isLoggedIn) {
+      props.history.push('/');
+    }
+  }, [auth, props.history]);
 
   function checkPasswords() {
     return password === password2;
-  }
-
-  function clearInputs() {
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setPassword('');
-        setPassword2('');
   }
 
   return (

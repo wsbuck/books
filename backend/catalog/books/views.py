@@ -8,7 +8,7 @@ from rest_framework.reverse import reverse
 from .models import Book, Author, Review, Genre, Language
 from .serializers import (
     BookSerializer, AuthorSerializer, ReviewSerializer,
-    GenreSerializer, LanguageSerializer
+    GenreSerializer, LanguageSerializer, AuthorSerializerSimple
 )
 
 @api_view(['GET', 'POST'])
@@ -16,11 +16,11 @@ def create_book(request):
     if request.method == 'GET':
         genres = GenreSerializer(Genre.objects.all(), many=True)
         languages = LanguageSerializer(Language.objects.all(), many=True)
+        authors = AuthorSerializerSimple(Author.objects.all(), many=True)
         return Response({
-            # 'genres': reverse('genre-list', request=request),
-            # 'languages': reverse('language-list', request=request)
             'genres': genres.data,
-            'languages': languages.data
+            'languages': languages.data,
+            'authors': authors.data,
         })
     elif request.method == 'POST':
         serializer = BookSerializer(data=request.data)

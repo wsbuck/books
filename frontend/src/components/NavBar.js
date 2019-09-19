@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 
 import { useAuth } from './auth-context';
 
+import Drawer from './Drawer';
+
 import { logoutUser } from '../utils';
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(1),
+    textAlign: 'left',
   },
 }));
 
@@ -32,33 +35,32 @@ function NavBar(props) {
 
   async function handleLogout() {
     await logoutUser();
-    setAuth({type: 'logout'});
+    setAuth({ type: 'logout' });
   }
 
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position='static' color='primary'>
         <Toolbar>
+          <Drawer />
           <Typography variant='h6' color='inherit' className={classes.title}>
-            Eskalore Books
+            Great Reads
           </Typography>
           {
             !auth.isLoggedIn
-            ? (
-              <Button
-                color="inherit"
-                onClick={() => props.history.push('/login')}
-              >
-                Login
-              </Button>
-            )
-            : (
-              <Button color="inherit"
-              onClick={() => handleLogout()}
-            >
-              Log Out
-            </Button>
-            )
+              ? (
+                <Button
+                  color="inherit"
+                  onClick={() => props.history.push('/login')}
+                >
+                  <i className="material-icons">face</i>
+                </Button>
+              )
+              : (
+                <Button color="inherit" onClick={() => handleLogout()}>
+                  Log Out
+                </Button>
+              )
           }
         </Toolbar>
       </AppBar>
