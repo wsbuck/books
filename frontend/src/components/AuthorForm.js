@@ -10,8 +10,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-import Checkbox from '@material-ui/core/Checkbox';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 import { createAuthor } from '../utils';

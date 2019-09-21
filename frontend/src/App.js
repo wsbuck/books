@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import AddBook from './pages/AddBook';
+import Book from './pages/Book';
 
 import './assets/styles/App.css';
 
@@ -35,6 +36,7 @@ function App() {
         <Route exact path='/login' component={Login} />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/add/book' component={AddBook} />
+        <Route exact path='/book/:id' component={Book} />
       </Switch>
     </div>
   );

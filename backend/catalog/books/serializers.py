@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from .models import Book, Author, Review, Genre, Language
+from .models import Book, Author, Review, Genre, Language, ReadBook
+
+from users.serializers import UserSerializer
 
 
 class LanguageSerializer(serializers.ModelSerializer):
@@ -38,7 +40,7 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = [
             'pk', 'title', 'description', 'language',
-            'genre', 'author', 'isbn', 'cover_image',
+            'genre', 'author', 'isbn', 'cover_image', 'publication_date',
         ]
 
 class BookCreateSerializer(serializers.ModelSerializer):
@@ -47,14 +49,30 @@ class BookCreateSerializer(serializers.ModelSerializer):
         model = Book
         fields = [
             'pk', 'title', 'description', 'language',
-            'genre', 'author', 'isbn', 'cover_image',
+            'genre', 'author', 'isbn', 'cover_image', 'publication_date'
         ]
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Review
         fields = [
             'user', 'content', 'date_published', 'star_rating',
-            'book',
+            'book', 'pk',
+        ]
+
+class ReviewCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = [
+            'user', 'content', 'star_rating', 'book', 'pk'
+        ]
+
+class ReadBookSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = ReadBook
+        fields = [
+            'user', 'book', 'timestamp'
         ]

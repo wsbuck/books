@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 from users.models import User
 
@@ -26,8 +28,8 @@ class Genre(models.Model):
     """
     name = models.CharField(max_length=100, unique=True)
     category = models.CharField(choices=CATEGORY_CHOICES,
-                               default='fiction',
-                               max_length=100, unique=False)
+                                default='fiction',
+                                max_length=100, unique=False)
 
     def __str__(self):
         return self.name
@@ -53,7 +55,7 @@ class Book(models.Model):
                               on_delete=models.CASCADE)
     author = models.ForeignKey(Author, related_name='books',
                                on_delete=models.CASCADE)
-    isbn = models.CharField('ISBN', max_length=13, null=True)
+    isbn = models.CharField('ISBN', max_length=13, null=True, blank=True)
     cover_image = models.ImageField(upload_to='book_covers',
                                     blank=False, null=True,
                                     default='book_covers/bookDefault.png')
@@ -68,7 +70,7 @@ class Book(models.Model):
 
 class Review(models.Model):
     """
-    Model representing a Book Review by a User
+    Model representing a book review by a user
     """
     user = models.ForeignKey(User, related_name='reviews',
                              on_delete=models.CASCADE)
@@ -81,3 +83,21 @@ class Review(models.Model):
 
     def __str__(self):
         return "{} : {}".format(self.star_rating, self.book.title)
+
+
+class ReadBook(models.Model):
+    """
+    Model representing a book read by a user
+    """
+    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE,
+                                     null=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE,
+                             null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             null=True, blank=True)
+    timestamp = models.DateField('Date marked read', auto_now_add=True)
+    content_object = GenericForeignKey()
+
+    def __str__(self):
+        return "{} read {}".format(self.user, self.book)

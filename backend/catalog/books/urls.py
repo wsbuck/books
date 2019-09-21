@@ -37,5 +37,10 @@ urlpatterns = [
         'languages/',
         views.LanguageList.as_view(),
         name='language-list'
-    )
+    ),
+    path(
+        'books/<int:pk>/reviews/',
+        views.ReviewList.as_view(),
+        name='review-list'
+    ),
 ]

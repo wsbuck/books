@@ -9,10 +9,15 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+import { Link } from 'react-router-dom';
+
 const useStyles = makeStyles(theme => ({
   root: {
     // margin: theme.spacing(1, 0),
     padding: theme.spacing(1),
+  },
+  link: {
+    textDecoration: 'none',
   },
   card: {
     // minWidth: 300,
@@ -36,77 +41,43 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-// export default function BookCard() {
-//   const classes = useStyles();
-
-//   return (
-//     <div>
-//       <Card className={classes.card}>
-//         <Grid container spacing={2}>
-//           <Grid
-//             item xs={4} className={classes.bookImg}
-//             container direction="column"
-//           >
-//             <Grid item xs={12} direction="column">
-//               <img src="#" />
-//             </Grid>
-//           </Grid>
-//           <Grid
-//             item xs={8} className={classes.textContent}
-//             container direction="column"
-//           >
-//             <Grid item xs>
-//               Book Title
-//             </Grid>
-//             <Grid item xs>
-//               Author Name
-//             </Grid>
-//             <Grid item xs>
-//               Publication Date
-//             </Grid>
-//           </Grid>
-//         </Grid>
-//       </Card>
-//     </div>
-//   );
-// }
-
 export default function BookCard(props) {
   const classes = useStyles();
   const { book } = props;
 
   return (
     <Grid item xs={12} sm={6} className={classes.root}>
-      <CardActionArea component="a" href="#">
-        <Card className={classes.card}>
-          <div className={classes.cardDetails}>
-            <CardContent>
-              <Typography component="h2" variant="h5">
-                {book.title}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {`${book.author.first_name} ${book.author.last_name}`}
-              </Typography>
-              <Typography variant="subtitle1" paragraph>
-                {
-                  book.publication_date
-                    ? book.publication_date
-                    : ""
-                }
-              </Typography>
-              <Typography variant="subtitle1" color="primary">
-                Continue reading...
+      <Link to={`book/${book.pk}`} className={classes.link}>
+        <CardActionArea>
+          <Card className={classes.card}>
+            <div className={classes.cardDetails}>
+              <CardContent>
+                <Typography component="h2" variant="h5">
+                  {book.title}
                 </Typography>
-            </CardContent>
-          </div>
-          <CardMedia
-            className={classes.cardMedia}
-            image={book.cover_image}
-            // image="https://source.unsplash.com/random"
-            title="Book Cover Image"
-          />
-        </Card>
-      </CardActionArea>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {`${book.author.first_name} ${book.author.last_name}`}
+                </Typography>
+                <Typography variant="subtitle1" paragraph>
+                  {
+                    book.publication_date
+                      ? book.publication_date
+                      : ""
+                  }
+                </Typography>
+                {/* <Typography variant="subtitle1" color="primary">
+                  Continue reading...
+                </Typography> */}
+              </CardContent>
+            </div>
+            <CardMedia
+              className={classes.cardMedia}
+              image={book.cover_image}
+              title="Book Cover Image"
+            />
+          </Card>
+        </CardActionArea>
+      </Link>
     </Grid>
   );
 }

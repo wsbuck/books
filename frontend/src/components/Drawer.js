@@ -40,7 +40,7 @@ function Drawer(props) {
               <ListItemIcon>
                 <i className="material-icons">home</i>
               </ListItemIcon>
-              <ListItemText primary="Home" />
+              <ListItemText primary="Books" />
             </ListItem>
             <ListItem button onClick={() => props.history.push('/add/book')}>
               <ListItemIcon>
