@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import status, generics, permissions
 from rest_framework.decorators import api_view
@@ -16,6 +17,7 @@ from .serializers import (
     GenreSerializer, LanguageSerializer, AuthorSerializerSimple,
     BookCreateSerializer, ReviewCreateSerializer,
 )
+
 
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
@@ -46,13 +48,13 @@ def create_book(request):
 
 
 class ReviewList(APIView):
-    permission_classes = [IsAuthenticated|ReadOnly]
+    permission_classes = [IsAuthenticated | ReadOnly]
 
     def get(self, request, pk):
         reviews = Review.objects.filter(book__pk=pk)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request, pk):
         data = {}
         data['book'] = pk
@@ -71,13 +73,50 @@ class ReviewList(APIView):
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
-class ReadBookList(APIView):
+class ReadBookDetail(APIView):
+    permission_classes = [IsAuthenticated | ReadOnly]
 
     def get(self, request, pk):
-        read_books = ReadBook.objects.filter(user__pk=pk)
-        serializer = ReadBookSerializer(read_books, many=True)
-        return Response(serializer.data)
-    
+        try:
+            status = Book.objects.get(pk=pk).reads.filter(
+                user=request.user).exists()
+        except:
+            status = False
+
+        return Response({'read': status})
+
+    def post(self, request, pk):
+        data = {}
+        data['book'] = pk
+        data['user'] = request.user.pk
+        try:
+            the_book = Book.objects.get(pk=pk)
+        except Book.DoesNotExist:
+            raise Http404
+
+        if not the_book.reads.filter(user=request.user).exists():
+            c_type = ContentType.objects.get_for_model(the_book)
+            new_read = ReadBook.objects.create(
+                book=the_book,
+                object_id=the_book.pk,
+                content_type=c_type,
+                user=request.user
+            )
+            return Response({'read': True}, status=status.HTTP_201_CREATED)
+        else:
+            the_book.reads.get(user=request.user).delete()
+            return Response({'read': False}, status=status.HTTP_200_OK)
+
+
+class ReadBookList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        book_keys = ReadBook.objects.filter(
+            user=self.request.user
+        ).values_list('book', flat=True)
+        return Book.objects.filter(pk__in=book_keys)
 
 
 class BookList(generics.ListAPIView):

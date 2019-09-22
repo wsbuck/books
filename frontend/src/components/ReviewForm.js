@@ -16,14 +16,19 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { createReview } from '../utils';
 
+import { useAuth } from './auth-context';
+
 const useStyles = makeStyles(theme => ({
   root: {
-
-  }
+  },
+  button: {
+    margin: theme.spacing(1)
+  },
 }));
 
 export default function ReviewForm(props) {
   const classes = useStyles();
+  const [auth, ] = useAuth();
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
   const [rating, setRating] = useState();
@@ -46,13 +51,20 @@ export default function ReviewForm(props) {
 
   return (
     <div>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setOpen(true)}
-      >
-        Add Review
-      </Button>
+      {
+        auth.isLoggedIn
+        ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpen(true)}
+            className={classes.button}
+          >
+            Add Review
+          </Button>
+        )
+        : ""
+      }
       <Dialog
         open={open} onClose={() => setOpen(false)}
         className={classes.root}

@@ -12,12 +12,9 @@ import { fetchReviews } from '../utils';
 const useStyles = makeStyles(theme => ({
   reviewGrid: {
     maxWidth: 600,
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     marginLeft: 'auto',
     marginRight: 'auto',
-  },
-  buttonContainer: {
-    textAlign: 'start',
   },
 }));
 
@@ -41,8 +38,8 @@ export default function ReviewList(props) {
   }
 
   return (
-    <Grid className={classes.reviewGrid} container spacing={2}>
-      <Grid item xs={12} className={classes.buttonContainer}>
+    <Grid className={classes.reviewGrid} container spacing={0}>
+      <Grid item xs={12} className={classes.buttonContainer} align="left">
         <ReviewForm bookId={bookId} addReview={addReview} />
       </Grid>
     {

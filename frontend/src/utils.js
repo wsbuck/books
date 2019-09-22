@@ -128,17 +128,17 @@ function createGenre(data) {
         category: data.category
       })
     })
-    .then((res) => {
-      if (res.status === 201) {
-        return res.json();
-      } else {
-        resolve(false);
-      }
-    })
-    .then((data) => {
-      resolve(data.pk);
-    })
-    .catch((e) => console.error(e));
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json();
+        } else {
+          resolve(false);
+        }
+      })
+      .then((data) => {
+        resolve(data.pk);
+      })
+      .catch((e) => console.error(e));
   });
 }
 
@@ -176,17 +176,17 @@ function fetchAddBookData() {
         'Content-Type': 'application/json'
       },
     })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json()
-      } else {
-        resolve(false);
-      }
-    })
-    .then((data) => {
-      resolve(data)
-    })
-    .catch((e) => console.error(e))
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json()
+        } else {
+          resolve(false);
+        }
+      })
+      .then((data) => {
+        resolve(data)
+      })
+      .catch((e) => console.error(e))
   });
 }
 
@@ -199,17 +199,17 @@ function fetchBookDetail(pk) {
         'Content-Type': 'application/json'
       },
     })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        resolve(false);
-      }
-    })
-    .then((data) => {
-      resolve(data);
-    })
-    .catch((e) => console.error(e))
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          resolve(false);
+        }
+      })
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((e) => console.error(e))
   });
 }
 
@@ -222,17 +222,17 @@ function fetchReviews(bookPk) {
         'Content-Type': 'application/json'
       },
     })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        reject();
-      }
-    })
-    .then((data) => {
-      resolve(data);
-    })
-    .catch((e) => console.error(e))
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          reject();
+        }
+      })
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((e) => console.error(e))
   });
 }
 
@@ -252,22 +252,95 @@ function createReview(data) {
         book: data.book
       })
     })
-    .then((res) => {
-      if (res.status === 201) {
-        return res.json();
-      } else {
-        resolve(false);
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json();
+        } else {
+          resolve(false);
+        }
+      })
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((e) => console.error(e));
+  });
+}
+
+function updateRead(bookPk) {
+  return new Promise((resolve, reject) => {
+    const token = localStorage.getItem('authtoken');
+    const url = `http://localhost:8000/api/v1/books/${bookPk}/read/`;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+      body: JSON.stringify({
+        book: bookPk
+      })
+    })
+      .then((res) => {
+        if (res.status === 201 || res.status === 200) {
+          return res.json();
+          // resolve(true);
+        } else {
+          reject();
+        }
+      })
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((e) => console.error(e))
+  });
+}
+
+function fetchReadStatus(bookPk) {
+  return new Promise((resolve, reject) => {
+    const token = localStorage.getItem('authtoken');
+    const url = `http://localhost:8000/api/v1/books/${bookPk}/read/`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${token}`
       }
     })
-    .then((data) => {
-      resolve(data);
+      .then((res) => res.json())
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((e) => console.error())
+  })
+}
+
+function getReadList(pageNum) {
+  return new Promise((resolve, reject) => {
+    const token = localStorage.getItem('authtoken');
+    const url = `http://localhost:8000/api/v1/books/read/?page=${pageNum}`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      }
     })
-    .catch((e) => console.error(e));
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          reject();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        resolve(data);
+      })
+      .catch((e) => console.error(e));
   });
 }
 
 
-export { 
+export {
   loginUser,
   logoutUser,
   signupUser,
@@ -279,4 +352,7 @@ export {
   fetchBookDetail,
   fetchReviews,
   createReview,
+  updateRead,
+  fetchReadStatus,
+  getReadList,
 };

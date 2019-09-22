@@ -10,12 +10,14 @@ import Grid from '@material-ui/core/Grid';
 
 import Rating from '@material-ui/lab/Rating';
 
+
 var moment = require('moment');
 
 const useStyles = makeStyles(theme => ({
   root: {
     textAlign: 'left',
-  }
+    padding: theme.spacing(1),
+  },
 }));
 
 export default function ReviewItem(props) {

@@ -43,4 +43,14 @@ urlpatterns = [
         views.ReviewList.as_view(),
         name='review-list'
     ),
+    path(
+        'books/<int:pk>/read/',
+        views.ReadBookDetail.as_view(),
+        name='read-detail'
+    ),
+    path(
+        'books/read/',
+        views.ReadBookList.as_view(),
+        name='read-list'
+    ),
 ]

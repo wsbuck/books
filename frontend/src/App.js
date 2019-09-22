@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import AddBook from './pages/AddBook';
 import Book from './pages/Book';
+import Read from './pages/Read';
 
 import './assets/styles/App.css';
 
@@ -37,6 +38,7 @@ function App() {
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/add/book' component={AddBook} />
         <Route exact path='/book/:id' component={Book} />
+        <Route exact path='/read' component={Read} />
       </Switch>
     </div>
   );

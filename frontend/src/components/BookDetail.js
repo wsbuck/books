@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { withRouter } from 'react-router';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+
+import { useAuth } from './auth-context';
+
+import { updateRead, fetchReadStatus } from '../utils';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,10 +35,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function BookDetail(props) {
+function BookDetail(props) {
   const classes = useStyles();
+  const [auth,] = useAuth();
+  const [readStatus, setReadStatus] = useState(false);
   const { book } = props;
+  
 
+  async function handleMarkRead() {
+    const status = await updateRead(book.pk);
+    setReadStatus(status.read);
+  }
+
+  useEffect(() => {
+    async function checkReadStatus() {
+      const status = await fetchReadStatus(book.pk);
+      setReadStatus(status.read);
+    }
+    checkReadStatus();
+  }, [book])
 
   return (
     <>
@@ -63,10 +85,26 @@ export default function BookDetail(props) {
                 {`${book.genre.name} - ${book.genre.category}`}
               </Typography>
             </Grid>
+            {
+              auth.isLoggedIn
+                ? (
+                  <Grid item xs={12} align="left">
+                    <Button 
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => handleMarkRead()}
+                    >
+                      {readStatus ? 'Mark Unread' : 'Mark Read'}
+                    </Button>
+                  </Grid>
+                )
+                : ""
+            }
           </Grid>
           <Grid item xs={12} sm={4}>
             <Grid item xs={12}>
-              <img 
+              <img
                 src={book.cover_image}
                 alt="book cover"
                 className={classes.bookCover}
@@ -83,3 +121,5 @@ export default function BookDetail(props) {
     </>
   )
 }
+
+export default withRouter(BookDetail);

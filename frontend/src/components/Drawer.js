@@ -40,7 +40,7 @@ function Drawer(props) {
               <ListItemIcon>
                 <i className="material-icons">home</i>
               </ListItemIcon>
-              <ListItemText primary="Books" />
+              <ListItemText primary="All Books" />
             </ListItem>
             <ListItem button onClick={() => props.history.push('/add/book')}>
               <ListItemIcon>
@@ -48,11 +48,11 @@ function Drawer(props) {
               </ListItemIcon>
               <ListItemText primary="Add Book" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={() => props.history.push('/read')}>
               <ListItemIcon>
-                <i className="material-icons">search</i>
+                <i className="material-icons">menu_book</i>
               </ListItemIcon>
-              <ListItemText primary="Search" />
+              <ListItemText primary="Books Read" />
             </ListItem>
           </List>
         </div>

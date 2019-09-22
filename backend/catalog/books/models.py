@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import (
+    GenericForeignKey, GenericRelation
+)
 from django.contrib.contenttypes.models import ContentType
 
 from users.models import User
@@ -62,6 +64,7 @@ class Book(models.Model):
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True)
     publication_date = models.DateField(null=True, blank=True)
+    reads = GenericRelation('ReadBook')
 
     def __str__(self):
         return "{} ({}) by {}".format(
