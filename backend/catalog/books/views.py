@@ -26,6 +26,12 @@ class ReadOnly(BasePermission):
 
 @api_view(['GET', 'POST'])
 def create_book(request):
+    """
+    This view is used to create a book
+
+    A functional view is used to send all Genres, Languages and Authors for
+    form population on the frontend
+    """
     if request.method == 'GET':
         genres = GenreSerializer(Genre.objects.all(), many=True)
         languages = LanguageSerializer(Language.objects.all(), many=True)
@@ -151,16 +157,16 @@ class GenreList(generics.ListCreateAPIView):
     serializer_class = GenreSerializer
 
 
-class GenreDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializer
+# class GenreDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Genre.objects.all()
+#     serializer_class = GenreSerializer
 
 
-class LanguageList(generics.ListAPIView):
-    queryset = Language.objects.all()
-    serializer_class = LanguageSerializer
+# class LanguageList(generics.ListAPIView):
+#     queryset = Language.objects.all()
+#     serializer_class = LanguageSerializer
 
 
-class LanguageDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Language.objects.all()
-    serializer_class = LanguageSerializer
+# class LanguageDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Language.objects.all()
+#     serializer_class = LanguageSerializer

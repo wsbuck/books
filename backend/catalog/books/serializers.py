@@ -32,6 +32,10 @@ class AuthorSerializerSimple(serializers.ModelSerializer):
         fields = ['pk', 'first_name', 'last_name']
 
 class BookSerializer(serializers.ModelSerializer):
+    """
+    This serializer is used for BookDetail.
+    Need more information on Foreign Keys than just pk
+    """
     language = LanguageSerializer()
     genre = GenreSerializer()
     author = AuthorSerializer()
@@ -44,7 +48,11 @@ class BookSerializer(serializers.ModelSerializer):
         ]
 
 class BookCreateSerializer(serializers.ModelSerializer):
-
+    """
+    Serializer used strictly for creation
+    
+    This could probably be optimized instead of having two serializers.
+    """
     class Meta:
         model = Book
         fields = [

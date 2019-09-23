@@ -64,6 +64,7 @@ class Book(models.Model):
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True)
     publication_date = models.DateField(null=True, blank=True)
+    # reads field used to keep track if a user read this book
     reads = GenericRelation('ReadBook')
     
     class Meta:
@@ -97,6 +98,8 @@ class Review(models.Model):
 class ReadBook(models.Model):
     """
     Model representing a book read by a user
+
+    This model is used to track a users read status of a Book
     """
     object_id = models.PositiveIntegerField()
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE,

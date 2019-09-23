@@ -26,8 +26,8 @@ class UserCreate(APIView):
 def activate(request, pk, token):
     user = get_object_or_404(User, pk=pk)
     if user.check_token(token):
-        # permission = Permission.objects.get(codename="can_add_book")
-        # user.user_permissions.add(permission)
+        # This is where you could add permissions after a user is activated
+        # TODO
         user.active = True
         user.save()
         return HttpResponseRedirect('http://books.williambuck.dev')
