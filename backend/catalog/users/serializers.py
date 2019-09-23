@@ -16,7 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
             Create
             """
             password = validated_data.pop('password')
-            # user = User(**validated_data)
             user = User.objects.create(**validated_data)
             user.set_password(password)
             user.save()
@@ -27,7 +26,6 @@ class UserSerializerWithToken(serializers.ModelSerializer):
     token = serializers.SerializerMethodField()
 
     def get_token(self, user):
-        # token = Token.objects.create(user=user)
         token, _ = Token.objects.get_or_create(user=user)
         return token.key
 

@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
+from django.urls import reverse
 
 from datetime import timedelta
 
@@ -28,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def create_activation_link(self):
         pk, token = self.make_token().split(":", 1)
-        return reverse('users:activate', kwargs={'pk': pk, 'token': token})
+        return reverse('activate', kwargs={'pk': pk, 'token': token})
     
     def make_token(self):
         return TimestampSigner().sign(self.pk)
@@ -36,7 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def check_token(self, token):
         try:
             key = "{}:{}".format(self.pk, token)
-            TimestampSigner().unsign(key, max_age=timedelta(minutes=60 * 72))
+            TimestampSigner().unsign(key, max_age=timedelta(hours=24 * 10))
         except (BadSignature, SignatureExpired):
             return False
         return True

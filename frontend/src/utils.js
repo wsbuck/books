@@ -1,4 +1,5 @@
-const host = '157.245.228.28';
+// const host = '157.245.228.28';
+const host = 'localhost:8000'
 
 function loginUser(credentials) {
   return new Promise((resolve, reject) => {

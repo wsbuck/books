@@ -65,6 +65,9 @@ class Book(models.Model):
         Language, on_delete=models.SET_NULL, null=True)
     publication_date = models.DateField(null=True, blank=True)
     reads = GenericRelation('ReadBook')
+    
+    class Meta:
+        ordering = ['-publication_date']
 
     def __str__(self):
         return "{} ({}) by {}".format(
@@ -83,6 +86,9 @@ class Review(models.Model):
                                    max_length=10)
     book = models.ForeignKey(Book, related_name='books',
                              on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-date_published']
 
     def __str__(self):
         return "{} : {}".format(self.star_rating, self.book.title)
