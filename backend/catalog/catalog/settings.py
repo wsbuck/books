@@ -60,8 +60,10 @@ MIDDLEWARE = [
 ]
 
 # CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+# CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+# CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+CORS_ORIGIN_WHITELIST = config('CORS_WHITELIST', cast=Csv())
+CSRF_TRUSTED_WHITELIST = config('CSRF_WHITELIST', cast=Csv())
 
 ROOT_URLCONF = 'catalog.urls'
 
