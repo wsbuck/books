@@ -44,7 +44,7 @@ function NavBar(props) {
         <Toolbar>
           <Drawer />
           <Typography variant='h6' color='inherit' className={classes.title}>
-            Great Reads
+            William's Books
           </Typography>
           {
             !auth.isLoggedIn

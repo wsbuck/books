@@ -162,9 +162,9 @@ class GenreList(generics.ListCreateAPIView):
 #     serializer_class = GenreSerializer
 
 
-# class LanguageList(generics.ListAPIView):
-#     queryset = Language.objects.all()
-#     serializer_class = LanguageSerializer
+class LanguageList(generics.ListAPIView):
+    queryset = Language.objects.all()
+    serializer_class = LanguageSerializer
 
 
 # class LanguageDetail(generics.RetrieveUpdateDestroyAPIView):
