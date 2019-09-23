@@ -152,5 +152,11 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.User'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@mg.williambuck.dev'
+EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'William Buck <noreply@williambuck.dev'
 
 # SITE_ID = 1
