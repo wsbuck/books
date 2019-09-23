@@ -162,7 +162,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'William Buck <noreply@williambuck.dev'
 
 # SITE_ID = 1
-if not DEBUG:
+# if not DEBUG:
     # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     # SECURE_SSL_REDIRECT = True
     # SESSION_COOKIE_SECURE = True
