@@ -1,9 +1,10 @@
-const host = '157.245.228.28';
+// const host = '157.245.228.28';
 // const host = 'localhost:8000'
+const host = 'booksapi.williambuck.dev'
 
 function loginUser(credentials) {
   return new Promise((resolve, reject) => {
-    const url = `http://${host}/api/v1/api-token-auth/`;
+    const url = `https://${host}/api/v1/api-token-auth/`;
     fetch(url, {
       method: 'POST',
       body: JSON.stringify({
@@ -40,7 +41,7 @@ function logoutUser() {
 
 function signupUser(userData) {
   return new Promise((resolve, reject) => {
-    const url = `http://${host}/api/v1/users/create/`;
+    const url = `https://${host}/api/v1/users/create/`;
     fetch(url, {
       method: 'POST',
       body: JSON.stringify({
@@ -70,7 +71,7 @@ function signupUser(userData) {
 
 function getBookList(pageNum) {
   return new Promise((resolve, reject) => {
-    const url = `http://${host}/api/v1/books/?page=${pageNum}`;
+    const url = `https://${host}/api/v1/books/?page=${pageNum}`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -94,7 +95,7 @@ function getBookList(pageNum) {
 function createAuthor(formData) {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('authtoken');
-    const url = `http://${host}/api/v1/authors/`;
+    const url = `https://${host}/api/v1/authors/`;
     fetch(url, {
       method: 'POST',
       body: formData,
@@ -119,7 +120,7 @@ function createAuthor(formData) {
 function createGenre(data) {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('authtoken');
-    const url = `http://${host}/api/v1/genres/`;
+    const url = `https://${host}/api/v1/genres/`;
     fetch(url, {
       method: 'POST',
       headers: {
@@ -148,7 +149,7 @@ function createGenre(data) {
 function createBook(formData) {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('authtoken');
-    const url = `http://${host}/api/v1/add/book/`;
+    const url = `https://${host}/api/v1/add/book/`;
     fetch(url, {
       method: 'POST',
       body: formData,
@@ -172,7 +173,7 @@ function createBook(formData) {
 
 function fetchAddBookData() {
   return new Promise((resolve, reject) => {
-    const url = `http://${host}/api/v1/add/book/`;
+    const url = `https://${host}/api/v1/add/book/`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -195,7 +196,7 @@ function fetchAddBookData() {
 
 function fetchBookDetail(pk) {
   return new Promise((resolve, reject) => {
-    const url = `http://${host}/api/v1/books/${pk}/`;
+    const url = `https://${host}/api/v1/books/${pk}/`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -218,7 +219,7 @@ function fetchBookDetail(pk) {
 
 function fetchReviews(bookPk) {
   return new Promise((resolve, reject) => {
-    const url = `http://${host}/api/v1/books/${bookPk}/reviews/`;
+    const url = `https://${host}/api/v1/books/${bookPk}/reviews/`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -242,7 +243,7 @@ function fetchReviews(bookPk) {
 function createReview(data) {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('authtoken');
-    const url = `http://${host}/api/v1/books/${data.book}/reviews/`;
+    const url = `https://${host}/api/v1/books/${data.book}/reviews/`;
     fetch(url, {
       method: 'POST',
       headers: {
@@ -272,7 +273,7 @@ function createReview(data) {
 function updateRead(bookPk) {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('authtoken');
-    const url = `http://${host}/api/v1/books/${bookPk}/read/`;
+    const url = `https://${host}/api/v1/books/${bookPk}/read/`;
     fetch(url, {
       method: 'POST',
       headers: {
@@ -301,7 +302,7 @@ function updateRead(bookPk) {
 function fetchReadStatus(bookPk) {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('authtoken');
-    const url = `http://${host}/api/v1/books/${bookPk}/read/`;
+    const url = `https://${host}/api/v1/books/${bookPk}/read/`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -319,7 +320,7 @@ function fetchReadStatus(bookPk) {
 function getReadList(pageNum) {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem('authtoken');
-    const url = `http://${host}/api/v1/books/read/?page=${pageNum}`;
+    const url = `https://${host}/api/v1/books/read/?page=${pageNum}`;
     fetch(url, {
       method: 'GET',
       headers: {
